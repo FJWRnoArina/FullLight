@@ -1,8 +1,10 @@
 package com.fulllight;
 
+import com.fulllight.mixin.SimpleOptionAccessor;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.SimpleOption;
 
 public class FullLightClient implements ClientModInitializer {
     private static final double MAX_GAMMA = 15.0D;
@@ -17,9 +19,10 @@ public class FullLightClient implements ClientModInitializer {
             return;
         }
 
-        double currentGamma = client.options.getGamma().getValue();
-        if (currentGamma != MAX_GAMMA) {
-            client.options.getGamma().setValue(MAX_GAMMA);
+        SimpleOption<Double> gammaOption = client.options.getGamma();
+        Double currentGamma = gammaOption.getValue();
+        if (currentGamma == null || currentGamma != MAX_GAMMA) {
+            ((SimpleOptionAccessor<Double>) gammaOption).fulllight$setValue(MAX_GAMMA);
         }
     }
 }
