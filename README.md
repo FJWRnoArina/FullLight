@@ -53,7 +53,7 @@ gradlew.bat clean build
 If wrapper files are missing in your local copy, generate them once (requires global Gradle):
 
 ```bat
-gradle wrapper --gradle-version 8.10.2
+gradle wrapper --gradle-version 9.3.1
 gradlew.bat clean build
 ```
 

@@ -22,7 +22,7 @@ public class FullLightClient implements ClientModInitializer {
         SimpleOption<Double> gammaOption = client.options.getGamma();
         Double currentGamma = gammaOption.getValue();
         if (currentGamma == null || currentGamma != MAX_GAMMA) {
-            ((SimpleOptionAccessor<Double>) (Object) gammaOption).fulllight$setValue(MAX_GAMMA);
+            ((SimpleOptionAccessor<Double>) gammaOption).fulllight$setValue(MAX_GAMMA);
         }
     }
 }
