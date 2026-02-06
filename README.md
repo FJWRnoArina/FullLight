@@ -13,6 +13,10 @@ A small client-side Minecraft mod that permanently enforces `gamma = 15.0` so yo
 - JDK 17 (recommended for Minecraft 1.20.1 + Fabric Loom)
 - Gradle (or Gradle Wrapper)
 
+## Supported game version
+
+- Minecraft Java Edition **1.20.1**
+
 ## How to package into a mod `.jar` on Windows
 
 ### 1) Open terminal in project folder
