@@ -1,41 +1,21 @@
 # FullLight (Fabric)
 
-A small client-side Minecraft mod that forces very high brightness so you can keep maximum visibility on Minecraft Java versions where editing `options.txt` no longer works.
-
-## Why the previous implementation failed
-
-The original code called:
-
-- `client.options.getGamma().setValue(15.0)`
-
-That looks correct, but in modern Minecraft versions, gamma is stored in `SimpleOption<Double>` with a validator/clamp. `setValue(...)` goes through that validator, so out-of-range values (like `15.0`) are clamped back to the normal slider range (typically `0.0` to `1.0`).
-
-So the mod kept writing a value that Minecraft immediately normalized, resulting in **no visible full-bright effect**.
-
-## Principle of the fixed approach
-
-This mod still runs every client tick, but now it:
-
-1. Gets the gamma `SimpleOption<Double>`.
-2. Uses a Mixin accessor to write directly to the internal `value` field.
-3. Sets that field to `15.0` directly, bypassing the normal `setValue(...)` clamp path.
-
-This keeps the internal gamma value at full-bright levels and makes the effect visible in-game.
+A small client-side Minecraft mod that permanently enforces `gamma = 15.0` so you can keep maximum visibility on Minecraft Java versions where editing `options.txt` gamma is no longer effective.
 
 ## Features
 
 - Runs on Fabric (`fabric-loader` + `fabric-api`)
-- Forces gamma internal value to `15.0` every client tick
+- Forces gamma to `15.0` every client tick
 - Client-only mod (safe to use on vanilla/Fabric servers)
-
-## Supported game version
-
-- Minecraft Java Edition **1.20.1**
 
 ## Requirements
 
 - JDK 17 (recommended for Minecraft 1.20.1 + Fabric Loom)
 - Gradle (or Gradle Wrapper)
+
+## Supported game version
+
+- Minecraft Java Edition **1.20.1**
 
 ## How to package into a mod `.jar` on Windows
 
@@ -43,8 +23,11 @@ This keeps the internal gamma value at full-bright levels and makes the effect v
 
 - In File Explorer, open this project folder.
 - Click the address bar, type `cmd`, and press Enter (opens Command Prompt in this folder).
+- You can also use PowerShell; commands below are for Command Prompt.
 
 ### 2) Build the mod
+
+Run:
 
 ```bat
 gradlew.bat clean build
@@ -65,7 +48,7 @@ After build succeeds, open:
 build\libs\
 ```
 
-You will usually get:
+You will usually get two jars:
 
 - `fulllight-<version>.jar` -> **install this one**
 - `fulllight-<version>-dev.jar` -> development jar (do not install for normal gameplay)
@@ -76,3 +59,9 @@ You will usually get:
 2. Press `Win + R`, enter `%appdata%\.minecraft\mods`, press Enter.
 3. Copy `fulllight-<version>.jar` into that `mods` folder.
 4. Start Minecraft using the Fabric profile.
+
+## Run in dev environment
+
+```bat
+gradlew.bat runClient
+```
